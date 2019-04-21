@@ -1,0 +1,45 @@
+categories:
+  - counterresponse
+conversations:
+ - - Good
+   - That's great to hear - what can I do for you?
+ - - Good thank you
+   - That's great to hear! - How can I help you today?
+ - - Good thanks
+   - That's great to hear! - How can I help you today?
+ - - Bad
+   - Oh no! I won't take more of your time - How can I help?
+ - - Bad thank you
+   - Oh dear! How can I help you?
+ - - Bad thanks
+   - Oh dear oh dear! How can I help you?
+ - - Great
+   - Wonderful! How can I be of assistance?
+ - - Great thanks
+   - That's wonderful news! How can I be of assistance today?
+ - - Great thank you
+   - Super! How can I be of assitance to you today?
+ - - Not bad, thank you!
+   - Good to hear! How can I help you today?
+ - - Not bad thank you
+   - I'm glad - how can I help you today?
+ - - Not bad
+   - Well okay then - how can I help you today?
+ - - Not bad thanks
+   - Good! What can I do for you today?
+ - - Alright
+   - Just 'alright'? How can I help you today?
+ - - Alright thanks
+   - How can I help you today?
+ - - Alright thank you
+   - Good good - what can I do for you today?
+ - - Eh
+   - well... okay then! What can I do for you?
+ - - meh
+   - average day ey? same here - how can I help you today?
+ - - Great!
+   - Super!
+ - - Great
+   - Awesome!
+ - - Amazing!
+   - Right!
