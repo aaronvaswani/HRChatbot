@@ -22,10 +22,16 @@
           <td><input type="text" name="username" placeholder="Name" value="{{request.form.username}}"></td>
         </tr>
         <tr>
-          <td><p>And also your job function:</p></td>
+          <td><p>And your Job Function:</p></td>
         </tr>
         <tr>
-          <td><input type="text" name="jobFunction" placeholder="Function" value="{{request.form.jobFunction}}"></td>
+          <td>
+            <select name="jobFunction">
+              {% for o in data %}
+              <option value="{{ o.function }}">{{ o.function }}</option>
+              {% endfor %}
+            </select>
+          </td>
         </tr>
         <tr></tr>
         <tr align="center">

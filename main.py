@@ -3,22 +3,17 @@ from chatterbot.trainers import ChatterBotCorpusTrainer
 from flask import Flask, render_template, request, redirect, url_for, flash, Response
 import logging
 import time
+import nltk
 
 app = Flask(__name__)
 
 #driver = webdriver.Chrome()
 
 bot = ChatBot(
-            'Bob',
-            
+            'Bob',            
             # read_only=True,
-            storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
-            database = monogodb_name,
-            database_uri = mongodb_uri,
-            # remove the below line when you want 
-            # database_uri=None,
-            #input_adapter='chatterbot.input.TerminalAdapter',
-            #output_adapter='chatterbot.output.TerminalAdapter',
+            storage_adapter='chatterbot.storage.SQLStorageAdapter',
+            database_uri=None,
             logic_adapters=[
             {
                 'import_path': 'chatterbot.logic.BestMatch',
@@ -28,6 +23,8 @@ bot = ChatBot(
     ]
 )
 
+storeusers = "userhistory.csv"
+
 def loadReward():
     trainer.train("./Reward/rewardBalance.yml")
     trainer.train("./Reward/rewardGeneral.yml")
@@ -36,23 +33,27 @@ def loadReward():
     trainer.train("./Reward/rewardPension.yml")
 
 trainer = ChatterBotCorpusTrainer(bot)
-# trainer.train("chatterbot.corpus.english")
-# trainer.train("./trivial.yml")
+trainer.train("chatterbot.corpus.english")
+trainer.train("./Corpus/trivial.yml")
 trainer.train("./Corpus/greetings.yml")
 trainer.train("./Corpus/general.yml")
 trainer.train("./Corpus/counterresponse.yml")
 
 @app.route("/")
 def home():
-    return render_template("start.html")
+    return render_template("start.html",
+    data = [{'function':'Reward'}, {'function':'Recruitment'}, {'function':'Compensation'}])
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
         enteredname = request.form['username']
-        enteredfunction = request.form['jobFunction']
-
+        enteredfunctionobj = request.form.get('jobFunction')        
+        enteredfunction = str(enteredfunctionobj)
         if enteredname != "" and enteredfunction != "":
+            userstore = open(storeusers, "a")
+            userstore.write('\n' + enteredname + ',' + enteredfunction)
+            userstore.close()
             if (enteredfunction == "Reward"):
                loadReward()
             #if entered function is x, load x, repeat for y,z etc
@@ -68,8 +69,7 @@ def chatbot():
 def get_bot_response():
     userText = request.args.get('msg')
     if (userText == "break" or userText == "bye"):
-        return str("bye!")
-        #driver.refresh()
+        return str("bye!")        
     else:
         return str(bot.get_response(userText))
 
@@ -78,10 +78,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 if __name__ == "__main__":
     app.run()
-
-#if the users name is X then it loads specific training data
-#if (function == "Reward"):
-#   loadReward()
 
 while True:
     try:
